@@ -1,0 +1,23 @@
+{
+  "name": "hangman",
+  "version": "1.0.0",
+  "description": "Node-based hangman game using constructor functions",
+  "main": "hangman.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jbhafner/Hangman-Node-Constructor.git"
+  },
+  "author": "Brian Hafner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jbhafner/Hangman-Node-Constructor/issues"
+  },
+  "homepage": "https://github.com/jbhafner/Hangman-Node-Constructor#readme",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "inquirer": "^3.3.0"
+  }
+}
