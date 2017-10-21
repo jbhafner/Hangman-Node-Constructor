@@ -1,3 +1,10 @@
+// ============ INQUIRERPROMPT.JS - INQUIRER PROMPTS AND PROGRAM LOGIC ============= //
+
+// Note: program logic in determining wins/losses and displays is split between 
+// userPrompt() and roundComplete().  I intended to move it all into roundComplete()
+// but the program was working and I ran out of time.
+
+// ============ REQUIRE/LOAD NPM MODULES ============= //
 var colors = require('colors');
 var inquirer = require('inquirer');
 var hangLetter = require('./checkLetter.js');
@@ -7,19 +14,19 @@ var counter=require.main.require('./hangman.js');
 
 console.log('hangLetter ',hangLetter);
 console.log('hangWord ', hangWord);
+
+// ============ INSTANTIATE CONSTRUCTORS ============= //
 var newLetter = new hangLetter.playLetter();
 var newWord = new hangWord.playWord();
-
-// console.log('var newLetter ', newLetter);
-// console.log('hang ', hang);
-// console.log('counter ', counter);
 
 counter.wins = 0;
 counter.losses = 0;
 hang.partialWord=[];
 
+// ============ INQUIRER PROMPTS ============= //
+// ------------ Inquirer Prompt - Start game --------------- //
+
 module.exports.fncLetterInput = function() { 
-	
 	inquirer.prompt([{
 		name: "play",
 		type: "confirm",
@@ -34,9 +41,9 @@ module.exports.fncLetterInput = function() {
 	});
 } // closes fncLetterInput Function	
 
+// ------------ Inquirer Prompt - Play game --------------- //
+
 function userPrompt(){
-		// var that = this;
-		//asks player for a letter
 		inquirer.prompt([{
 			  name: "chosenLtr",
 			  type: "input",
@@ -70,6 +77,9 @@ function userPrompt(){
 		});
 }	// closes userPrompt function
 
+// ------------ Inquirer Prompt - continue game once round is over --------------- //
+// ------------ I did not activate this yet --------------- //
+
 function continuePrompt() { 
 		inquirer.prompt([{
 		name: "continue",
@@ -84,6 +94,10 @@ function continuePrompt() {
 		}
 	});
 } // closes continuePrompt Function	
+
+// ============ FUNCTIONS ============= //
+// ------------ roundComplete() runs after each letter selected --------------- //
+// ------------ to update display and totals, and restart game --------------- //
 
 function roundComplete() {
 
@@ -108,10 +122,7 @@ function roundComplete() {
 
 } // closes roundComplete function
 
-module.exports.writeResults = function() {
-	updateResults();
-}
-
+// ------------ updateResults() updates status and results --------------- //
 function updateResults() {
 	process.stdout.write('\033c');  // clear the screen
 	console.log('\n    ' + ' Welcome to Tech Hangman '.black.bgMagenta + "\n");
@@ -122,6 +133,15 @@ function updateResults() {
 	console.log('>>>>> Current word ', hang.partialWord, ' | Wrong letters guessed ', hang.wrongGuess," <<<<<\n");	
 	// console.log('zzzzzzzzzzzzzzzzzzzzzzzzzz');
 }
+
+// ------------ export writeResults() - exports and runs --------------- //
+// ------------ updateResults() above.  I could not export --------------- //
+// ------------ updateResults() and run within this module. --------------- //
+
+module.exports.writeResults = function() {
+	updateResults();
+}
+
 
 
 

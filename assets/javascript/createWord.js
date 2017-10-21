@@ -1,9 +1,21 @@
+// ============ CREATEWORD.JS - GENERATES WORD FOR GAME ============= //
+
+// ============ REQUIRE/LOAD NPM MODULES ============= //
 var hang=require.main.require('./hangman.js');
 var counter=require.main.require('./hangman.js');
-// var inqPrompt = require('./inquirerPrompt.js');
 
-// creates and uses selectedWord,
-// lettersInWord, dashes, partialWord
+
+// ============ CREATE NEW WORD AND ASSOCIATED DATA ============= //
+
+// ------------ export constructor playWord with     --------------- //
+// ------------ function createWord to generate word --------------- //
+
+// ------------ creates and uses selectedWord, lettersInWord,--------------- //
+// ------------ dashes, partialWord variables--------------- //
+
+// I tried keeping all of those variables within the constructor,
+// but could not access them from other modules, so I store them
+// in the "hang" and "counter" objects in hangman.js
 
 module.exports.playWord = function(word) {
 	this.word = word;
@@ -11,7 +23,6 @@ module.exports.playWord = function(word) {
 	this.selectedWord = "";
 	this.lettersInWord = [];
 	this.dashes = 0;
-	// this.partialWord = [];
 	this.wrongGuess = [];
 	this.createWord = function() {
 		this.selectedWord = this.wordList[Math.floor(Math.random()*this.wordList.length)];
@@ -26,15 +37,12 @@ module.exports.playWord = function(word) {
 		hang.wrongGuess=[];
 		this.wrongGuess=[];
 		hang.partialWord=[];
-		// this.partialWord=[];
 
 		//Create right number of dashes
 		for (var i=0; i<this.dashes; i++) {
 			hang.partialWord.push("_");
-
 		}
 
 		console.log('Current Word: ', hang.partialWord);
-		// inqPrompt.writeResults();
 	};
 };

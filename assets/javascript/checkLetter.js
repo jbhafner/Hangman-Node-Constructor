@@ -1,8 +1,17 @@
+// ============ CHECKLETTERS.JS - CHECKS INPUT LETTERS ============= //
+
+// ============ REQUIRE/LOAD NPM MODULES ============= //
 var hang=require.main.require('./hangman.js');
 var counter=require.main.require('./hangman.js');
 var inqPrompt = require('./inquirerPrompt.js');
 
-// uses dashes, lettersInWord, partialWord
+
+// ============ CHECK LETTERS INPUT TO SEE IF THEY ARE IN WORD ============= //
+
+// ------------ export constructor playLetter             --------------- //
+// ------------ with function checkLetters to check input --------------- //
+
+// ------------ uses dashes, lettersInWord, partialWord--------------- //
 
  // function playLetter(letter) {
 module.exports.playLetter = function(letter) {	
