@@ -29,6 +29,6 @@ module.exports.counter = {
 
 // ============ START GAME ============= //
 process.stdout.write('\033c');  // clear the screen
-console.log('\n    ' + ' Welcome to Tech Hangman '.black.bgMagenta + "\n");
+console.log('\n    ' + '              ' + ' Welcome to Tech Hangman '.black.bgMagenta + "\n");
 inqPrompt.fncLetterInput();
 

@@ -34,6 +34,7 @@ module.exports.fncLetterInput = function() {
 	}]).then(function(response) {
 		if(response.play) {
 			newWord.createWord();
+			updateResults();
 			userPrompt();
 		} else {
 			console.log("Sorry you don't want to play :-(  Maybe next time?");
@@ -56,23 +57,18 @@ function userPrompt(){
 			  //   }
 			  // }
 		}]).then(function(ltr) {
-		  //toLowerCase because words in word bank are all caps
+		  //toLowerCase because words are lower case
 		  var letterReturned = (ltr.chosenLtr).toLowerCase();
 		  console.log('Letter entered: ', letterReturned);
 		  newLetter.checkLetters(letterReturned);
-		      if(counter.guessLeft > 0) {
-		      	// console.log("You Won!");
+			  if(counter.guessLeft > 0) {
 		        roundComplete();
 		        userPrompt();
-		        // continuePrompt()
+		        // return;
 		      }else {
-		        console.log(' ----------------');
-		        console.log(' | You lost.... | ');
-		        console.log(' ----------------\n');		        
-		        console.log(('The word you were guessing was: ' + hang.selectedWord).cyan + '\n');
 		        roundComplete();
-		        updateResults();
-				userPrompt();		        
+				updateResults();
+		        continuePrompt();
 		      } 
 		});
 }	// closes userPrompt function
@@ -84,11 +80,12 @@ function continuePrompt() {
 		inquirer.prompt([{
 		name: "continue",
 		type: "confirm",
-		message: "Do you want to continue?".inverse
+		message: "\nDo you want to continue?".inverse
 	}]).then(function(response) {
 		if(response.continue) {
 			newWord.createWord();
-			userPrompt();
+			updateResults();
+			return;
 		} else {
 			console.log("Thanks for playing today.  Goodbye");
 		}
@@ -102,22 +99,29 @@ function continuePrompt() {
 function roundComplete() {
 
 	// check if user won
-	if(hang.lettersInWord.toString() == hang.partialWord.toString()) {
+	console.log(`hang.lettersInWord: ${hang.lettersInWord} | hang.partialWord.toString() ${hang.partialWord.toString()} | variable match: ${hang.lettersInWord == hang.partialWord.toString()}`);
+	if(hang.lettersInWord == hang.partialWord.toString()) {
+	console.log('running roundComplete');
 		counter.wins++;
-		console.log("++++++++++++");
-		console.log("+ You Won! +");
-		console.log("++++++++++++\n");
 		updateResults();
-		// continuePrompt();		
-		newWord.createWord();
+		console.log("     ++++++++++++");
+		console.log("     + You Won! +");
+		console.log("     ++++++++++++\n");
+		// return;
+		continuePrompt();		
+		// newWord.createWord();
 	}
 
 	// if user losses
 	else if (counter.guessLeft === 0) {
 		counter.losses++;
-		// console.log("You lost");
-		// continuePrompt();		
-		newWord.createWord();
+		updateResults();
+        console.log('    ----------------');
+        console.log('    | You lost.... | ');
+        console.log('    ----------------\n');		        
+        console.log(('The word you were guessing was: ' + hang.selectedWord).cyan + '\n');
+		continuePrompt();		
+		// newWord.createWord();
 	}
 
 } // closes roundComplete function
@@ -125,13 +129,13 @@ function roundComplete() {
 // ------------ updateResults() updates status and results --------------- //
 function updateResults() {
 	process.stdout.write('\033c');  // clear the screen
-	console.log('\n    ' + ' Welcome to Tech Hangman '.black.bgMagenta + "\n");
-	console.log("\n++++++++++++++++++++++++++++++++++++++++++++++++");
-	console.log(("    Win Count: " + counter.wins + " | Loss Count: " + counter.losses + " | Guesses Left: " + counter.guessLeft + " ").inverse);
-	console.log("================================================\n");	
-	// console.log('aaaaaaaaaaaaaaaaaaaaaaaaa');
-	console.log('>>>>> Current word ', hang.partialWord, ' | Wrong letters guessed ', hang.wrongGuess," <<<<<\n");	
-	// console.log('zzzzzzzzzzzzzzzzzzzzzzzzzz');
+	console.log('\n    ' + '              ' + ' Welcome to Tech Hangman '.black.bgMagenta + "\n");
+	console.log("\n" + "   " + "+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+	console.log(("   | ") + ("    Win Count: " + counter.wins + " | Loss Count: " + counter.losses + " | Guesses Left: " + counter.guessLeft + " ").inverse + " |");
+	console.log("   " + "=======================================================\n");	
+	console.log('   >>>>> Current word ', hang.partialWord, ' <<<<<' );
+	console.log('   >>>>> Wrong letters guessed ', hang.wrongGuess," <<<<<\n");	
+	return;
 }
 
 // ------------ export writeResults() - exports and runs --------------- //
