@@ -74,7 +74,6 @@ function userPrompt(){
 }	// closes userPrompt function
 
 // ------------ Inquirer Prompt - continue game once round is over --------------- //
-// ------------ I did not activate this yet --------------- //
 
 function continuePrompt() { 
 		inquirer.prompt([{
@@ -85,7 +84,7 @@ function continuePrompt() {
 		if(response.continue) {
 			newWord.createWord();
 			updateResults();
-			return;
+			// return;
 		} else {
 			console.log("Thanks for playing today.  Goodbye");
 		}
